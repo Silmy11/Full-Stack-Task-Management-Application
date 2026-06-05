@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Organize Your Work</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Login/Register Screen -->
+    <div id="authScreen" class="auth-screen">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1 class="auth-logo">✓ TaskFlow</h1>
+                <p class="auth-tagline">Organize, prioritize, accomplish</p>
+                
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form active">
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            id="loginUsername" 
+                            placeholder="Username"
+                            required
+                            class="input-field"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            type="password" 
+                            id="loginPassword" 
+                            placeholder="Password"
+                            required
+                            class="input-field"
+                        >
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <p class="auth-toggle">Don't have account? 
+                        <a href="#" onclick="switchAuthForm(event)">Register here</a>
+                    </p>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="auth-form">
+                    <h2>Register</h2>
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            id="registerUsername" 
+                            placeholder="Choose username"
+                            required
+                            class="input-field"
+                        >
+                        <small>At least 3 characters</small>
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            type="password" 
+                            id="registerPassword" 
+                            placeholder="Choose password"
+                            required
+                            class="input-field"
+                        >
+                        <small>At least 4 characters</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <p class="auth-toggle">Already have account? 
+                        <a href="#" onclick="switchAuthForm(event)">Login here</a>
+                    </p>
+                </form>
+
+                <div id="authError" class="auth-error"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Screen -->
+    <div id="appScreen" class="app-screen" style="display: none;">
+        <div class="container">
+            <!-- Header -->
+            <header class="header">
+                <div>
+                    <div class="header-content">
+                        <h1 class="logo">✓ TaskFlow</h1>
+                        <p class="tagline">Welcome, <span id="userDisplay">User</span>!</p>
+                    </div>
+                </div>
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-label">Total</span>
+                        <span class="stat-value" id="totalTasks">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Completed</span>
+                        <span class="stat-value completed" id="completedTasks">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Pending</span>
+                        <span class="stat-value pending" id="pendingTasks">0</span>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="btn btn-secondary btn-small">Logout</button>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Add Task Section -->
+                <section class="add-task-section">
+                    <h2>Create New Task</h2>
+                    <form id="taskForm" class="task-form">
+                        <div class="form-group">
+                            <input 
+                                type="text" 
+                                id="taskTitle" 
+                                placeholder="What needs to be done?"
+                                required
+                                class="input-title"
+                            >
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <textarea 
+                                    id="taskDescription" 
+                                    placeholder="Add details (optional)"
+                                    class="input-description"
+                                    rows="3"
+                                ></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="taskPriority">Priority</label>
+                                <select id="taskPriority" class="input-select">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="taskDueDate">Due Date</label>
+                                <input 
+                                    type="date" 
+                                    id="taskDueDate"
+                                    class="input-date"
+                                >
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <span>+ Add Task</span>
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Filter Section -->
+                <section class="filter-section">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All Tasks</button>
+                        <button class="filter-btn" data-filter="pending">Pending</button>
+                        <button class="filter-btn" data-filter="completed">Completed</button>
+                    </div>
+                </section>
+
+                <!-- Tasks List -->
+                <section class="tasks-section">
+                    <div id="tasksContainer" class="tasks-container">
+                        <div class="empty-state">
+                            <div class="empty-icon">📝</div>
+                            <p>No tasks yet. Create one to get started!</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
